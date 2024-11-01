@@ -3,6 +3,9 @@ const express = require("express");
 const app = express(),
 	port = 3000;
 
+const messageRoutes = require("./routes/messageRoutes");
+app.use(messageRoutes);
+
 app.get("/", (_request, response) => {
 	response.send({ Hej: "Världen" });
 });
