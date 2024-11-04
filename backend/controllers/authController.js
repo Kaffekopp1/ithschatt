@@ -3,7 +3,7 @@ const argon2 = require("argon2");
 
 exports.registerUser = async (request_, response) => {
 	try {
-		// const { username, password } = req.body;
+		const { username, password } = req.body;
 		// const hashedPassword = await argon2.hash(password, 10);
 		// res.status(201).json({
 		// 	message: "En ny användare har lagts till!",
