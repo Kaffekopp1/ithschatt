@@ -7,14 +7,6 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE messages (
-    id SERIAL PRIMARY KEY,
-    sender_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    group_id INTEGER NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
-    content TEXT NOT NULL,
-    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE user_status (
     user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
     status VARCHAR(20) DEFAULT 'offline',
@@ -32,6 +24,14 @@ CREATE TABLE group_members (
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
     joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (group_id, user_id)
+);
+
+CREATE TABLE messages (
+    id SERIAL PRIMARY KEY,
+    sender_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    group_id INTEGER NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO users (username, password_hash, email) VALUES ($1, $2, $3);
