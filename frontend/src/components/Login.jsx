@@ -12,13 +12,12 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const loginSchema = z.object({
-	username: z.string().min(3, "fyll i användare"),
-	email: z.string().email("Det där är ingen emailadress"),
-	password: z.string().min(1, "fyll i ditt lösenord")
-});
-
 export default function Login() {
+	const loginSchema = z.object({
+		username: z.string().min(1, "fyll i användare"),
+		email: z.string().email("Det där är ingen emailadress"),
+		password: z.string().min(1, "fyll i ditt lösenord")
+	});
 	const onSubmit = async (data) => {
 		console.log("data", data.username);
 		try {
@@ -39,9 +38,6 @@ export default function Login() {
 			alert("något gick fel");
 			console.error("Error vid api fråga:", error);
 		}
-
-		console.log("test");
-		console.log(data);
 	};
 	const form = useForm({
 		resolver: zodResolver(loginSchema),
