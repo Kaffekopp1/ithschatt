@@ -18,7 +18,7 @@ app.use(authRoutes);
 app.use(protectedRoutes);
 
 app.get("/", (_request, response) => {
-	response.send({ Hej: "Världen" });
+	response.json({ hello: "Världen" });
 });
 
 app.listen(port, () => {
