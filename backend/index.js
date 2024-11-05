@@ -21,15 +21,6 @@ app.get("/", (_request, response) => {
 	response.send({ Hej: "Världen" });
 });
 
-// Endpoint om ni vill testa att db är kopplat
-// app.get("/api", async (_request, response) => {
-// 	const { rows } = await client.query("SELECT * FROM cities WHERE name = $1", [
-// 		"Stockholm"
-// 	]);
-
-// 	response.send(rows);
-// });
-
 app.listen(port, () => {
 	console.log(`Ready on http://localhost:${port}/`);
 });

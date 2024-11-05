@@ -24,31 +24,33 @@ exports.registerUser = async (_request, response) => {
 	}
 };
 
-exports.loginUser = async (req, res) => {
-	const { username, password } = req.body;
+exports.loginUser = async (_request, response) => {
+	const { username, password } = _request.body;
 	try {
 		const { rows } = await client.query(
 			"SELECT * FROM users WHERE username = $1",
 			[username]
 		);
 		if (!rows[0]) {
-			return res
+			return response
 				.status(401)
 				.json({ error: "Det gick inte att logga in med din användare!" });
 		}
 		let passwordfrom = rows[0].password_hash;
 		const passwordMatch = await argon2.verify(passwordfrom, password);
 		if (!passwordMatch) {
-			return res.status(401).json({ error: "Ditt lösenord är inte korrekt!" });
+			return response
+				.status(401)
+				.json({ error: "Ditt lösenord är inte korrekt!" });
 		}
 		const token = jwt.sign({ userId: rows[0]._id }, "your-secret-key", {
 			expiresIn: "1h"
 		});
-		res.status(200).json({
+		response.status(200).json({
 			token,
 			message: "Du är inloggad!"
 		});
 	} catch (error) {
-		res.status(500).json({ error: "Inloggningen gick fel!" });
+		response.status(500).json({ error: "Inloggningen gick fel!" });
 	}
 };
