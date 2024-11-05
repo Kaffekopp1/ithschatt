@@ -26,7 +26,6 @@ exports.registerUser = async (_request, response) => {
 
 exports.loginUser = async (_request, response) => {
 	const { username, email, password } = _request.body;
-	console.log("email", _request.body, email);
 	try {
 		const { rows } = await client.query(
 			"SELECT * FROM users WHERE username = $1",
