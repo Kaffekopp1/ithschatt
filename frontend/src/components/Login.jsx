@@ -11,8 +11,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../AuthContext";
 export default function Login() {
+	const navigate = useNavigate();
+	const { setToken, setUser } = useContext(AuthContext);
 	const loginSchema = z.object({
 		username: z.string().min(1, "fyll i användare"),
 		email: z.string().email("Det där är ingen emailadress"),
@@ -34,6 +38,9 @@ export default function Login() {
 			});
 			const answer = await response.json();
 			console.log(answer);
+			setToken(answer.token);
+			setUser(data.username);
+			navigate("/homepage");
 		} catch (error) {
 			alert("något gick fel");
 			console.error("Error vid api fråga:", error);

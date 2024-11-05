@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import WelcomePage from "./pages/WelcomePage";
 import Login from "./components/Login";
 import SignupForm from "./components/SignupForm";
+import ProtectedRoutes from "./components/ProtectedRoutes";
+import HomePage from "./pages/HomePage";
+import AuthProvider from "./AuthProvider";
 
 function App() {
 	// useEffect(() => {
@@ -16,13 +19,18 @@ function App() {
 
 	// return <></>;
 	return (
-		<Router>
-			<Routes>
-				<Route path="/" element={<WelcomePage />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/SignupForm" element={<SignupForm />} />
-			</Routes>
-		</Router>
+		<AuthProvider>
+			<Router>
+				<Routes>
+					<Route path="/" element={<WelcomePage />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/SignupForm" element={<SignupForm />} />
+					<Route element={<ProtectedRoutes />}>
+						<Route path="/homepage" element={<HomePage />} />
+					</Route>
+				</Routes>
+			</Router>
+		</AuthProvider>
 	);
 }
 
