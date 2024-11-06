@@ -16,9 +16,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function SignupForm() {
   const schema = z.object({
-    username: z.string().min(3, 'Username must be at least 3 characters long'),
-    email: z.string().email('Please enter a valid email'),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
+    username: z.string().min(3, 'Användarnamnet måste vara minst 3 tecken'),
+    email: z.string().email('Epost-adressen måste ha ett giltigt format'),
+    password: z.string().min(8, 'Lösenordet måste vara minst 8 tecken'),
   });
 
   const onSubmit = async (data) => {
@@ -102,8 +102,8 @@ export default function SignupForm() {
                 </FormControl>
                 <FormDescription>
                   {passwordValue.length >= 8
-                    ? 'Du har angivit lösenord: Hunter22'
-                    : 'Lösenordet måste vara minst 8 tecken långt'}
+                    ? 'Du har angivit lösenord: Hunter2'
+                    : ''}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
