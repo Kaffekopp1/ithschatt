@@ -5,7 +5,7 @@ const http = require("http");
 dotenv.config();
 
 const app = express(),
-	port = 3000;
+  port = 3000;
 
 const cors = require("cors");
 const server = http.createServer(app);
@@ -37,11 +37,11 @@ app.use(authRoutes);
 app.use(protectedRoutes);
 
 app.get("/", (_request, response) => {
-	response.json({ hello: "Världen" });
+  response.json({ hello: "Världen" });
 });
 server.listen(4000, () => {
 	console.log("Listening on *:4000");
 });
 app.listen(port, () => {
-	console.log(`Ready on http://localhost:${port}/`);
+  console.log(`Ready on http://localhost:${port}/`);
 });

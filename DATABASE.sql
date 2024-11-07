@@ -9,7 +9,7 @@ CREATE TABLE users (
 
 CREATE TABLE user_status (
     user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-    status VARCHAR(20) DEFAULT 'offline',
+    status BOOLEAN DEFAULT FALSE,
     last_active TIMESTAMP
 );
 

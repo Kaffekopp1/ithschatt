@@ -5,6 +5,9 @@ const userController = require("../controllers/authController");
 
 router.post("/register", userController.registerUser);
 router.post("/login", userController.loginUser);
+router.patch("/updateUserStatus", userController.updateUserStatus);
+// router.patch
+
 // router.get("/auth", verifyToken, (req, res) => {
 // 	res.status(201).json({ message: true });
 // });
