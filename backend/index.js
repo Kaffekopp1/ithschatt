@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express(),
-	port = 3000;
+  port = 3000;
 
 const cors = require("cors");
 
@@ -18,9 +18,9 @@ app.use(authRoutes);
 app.use(protectedRoutes);
 
 app.get("/", (_request, response) => {
-	response.json({ hello: "Världen" });
+  response.json({ hello: "Världen" });
 });
 
 app.listen(port, () => {
-	console.log(`Ready on http://localhost:${port}/`);
+  console.log(`Ready on http://localhost:${port}/`);
 });
