@@ -20,7 +20,8 @@ export default function SignupForm() {
 		firstName: z.string().min(1, "fyll i ditt förnamn"),
 		lastName: z.string().min(1, "fyll i ditt efternamn"),
 		email: z.string().email("Epost-adressen måste ha ett giltigt format"),
-		password: z.string().min(8, "Lösenordet måste vara minst 8 tecken")
+		password: z.string().min(8, "Lösenordet måste vara minst 8 tecken"),
+		ssn: z.string().min(12, "felaktigt personnr")
 	});
 
 	const onSubmit = async (data) => {
@@ -36,7 +37,8 @@ export default function SignupForm() {
 					email: data.email,
 					firstName: data.firstName,
 					lastName: data.lastName,
-					password: data.password
+					password: data.password,
+					ssn: data.ssn
 				})
 			});
 			const answer = await response.json();
@@ -54,7 +56,8 @@ export default function SignupForm() {
 			email: "",
 			password: "",
 			firstName: "",
-			lastName: ""
+			lastName: "",
+			ssn: ""
 		}
 	});
 
@@ -103,6 +106,20 @@ export default function SignupForm() {
 								<FormControl>
 									<Input placeholder="Efternamn" {...field} />
 								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="ssn"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Personnummer</FormLabel>
+								<FormControl>
+									<Input type="number" {...field} />
+								</FormControl>
+								<FormDescription>Ditt personnummer 12 siffror</FormDescription>
 								<FormMessage />
 							</FormItem>
 						)}
