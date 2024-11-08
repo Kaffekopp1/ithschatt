@@ -43,3 +43,5 @@ DELETE FROM users WHERE id = $1;
 INSERT INTO messages (group_id, sender_id, content) VALUES ($1, $2, $3);
 
 SELECT * FROM messages WHERE group_id = $1 ORDER BY sent_at;
+
+INSERT INTO user_status (user_id, status, last_active) VALUES (1, FALSE, NOW());

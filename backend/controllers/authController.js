@@ -5,22 +5,40 @@ const client = require("../connectionDb.js");
 exports.registerUser = async (request, response) => {
   const { username, password, email } = request.body;
   console.log("username", password, username, email);
+
   const hashedPassword = await argon2.hash(password, 10);
+
   try {
-    await client.query(
-      `INSERT INTO users (username, password_hash, email) VALUES ($1, $2, $3)`,
+    // Start transaction
+    await client.query("BEGIN");
+
+    const result = await client.query(
+      `INSERT INTO users (username, password_hash, email) VALUES ($1, $2, $3) RETURNING id`,
       [username, hashedPassword, email]
     );
+
+    const userId = result.rows[0].id;
+
+    await client.query(
+      `INSERT INTO user_status (user_id, status) VALUES ($1, $2)`,
+      [userId, false] // status default false
+    );
+
+    // Commit transaction
+    await client.query("COMMIT");
+
     response.status(200).send({
       message: "En ny användare har lagts till!",
-      password: email,
       username: username,
-      hashed: hashedPassword,
+      email: email,
     });
   } catch (error) {
-    response
-      .status(500)
-      .json({ problem: "Registreringen blev fel!", error: error });
+    // Rollback if something is missing
+    await client.query("ROLLBACK");
+    response.status(500).json({
+      problem: "Registreringen blev fel!",
+      error: error.message,
+    });
   }
 };
 
@@ -73,22 +91,30 @@ exports.updateUserStatus = async (_request, response) => {
       return response.status(404).json({ message: "User not found" });
     }
 
-    const currentStatus = checkStatusResult.rows[0].status;
+    const currentStatus = result.rows[0].status;
 
-    // Växla status (omvända nuvarande värde)
-    const newStatus = !currentStatus;
+    // Toggle status
+    const isLoggedIn = !currentStatus;
 
-    await client.query(
-      `UPDATE user_status SET status = $1 WHERE user_id = $2`,
-      [newStatus, user_id]
-    );
+    // if user is logged in
+    if (isLoggedIn) {
+      await client.query(
+        `UPDATE user_status SET status = $1 WHERE user_id = $2`,
+        [isLoggedIn, user_id]
+      );
+    } else {
+      // user logged out, last_active row is updated too.
+      await client.query(
+        `UPDATE user_status SET status = $1, last_active = NOW() WHERE user_id = $2`,
+        [isLoggedIn, user_id]
+      );
+    }
 
     response.json({
-      message: `User status updated to ${newStatus}`,
+      message: `User status updated to ${isLoggedIn}`,
       user_id: user_id,
-      newStatus: newStatus,
+      newStatus: isLoggedIn,
     });
-    console.log("user_id newStatus :>> ", user_id, newStatus);
   } catch (error) {
     console.error("Error updating user status:", error);
     response.status(500).json({ error: "Internal server error" });
