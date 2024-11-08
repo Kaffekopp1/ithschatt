@@ -38,9 +38,13 @@ export default function Login() {
 			});
 			const answer = await response.json();
 			console.log(answer);
-			setToken(answer.token);
-			setUser(data.username);
-			navigate("/homepage");
+			if (answer.error) {
+				alert("nu gick det på tok är det verkligen rätt uppgifter");
+			} else {
+				setToken(answer.token);
+				setUser(data.username);
+				navigate("/homepage");
+			}
 		} catch (error) {
 			alert("något gick fel");
 			console.error("Error vid api fråga:", error);
