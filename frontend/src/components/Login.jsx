@@ -98,7 +98,7 @@ export default function Login() {
 							<FormItem>
 								<FormLabel>Lösenord</FormLabel>
 								<FormControl>
-									<Input placeholder="Lösenord" {...field} />
+									<Input type="password" placeholder="••••••••" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
