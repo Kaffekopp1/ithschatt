@@ -31,6 +31,7 @@ exports.registerUser = async (request, response) => {
       message: "En ny användare har lagts till!",
       username: username,
       email: email,
+      hashed: hashedPassword,
     });
   } catch (error) {
     // Rollback if something is missing
