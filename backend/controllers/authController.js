@@ -121,3 +121,20 @@ exports.updateUserStatus = async (_request, response) => {
 		response.status(500).json({ error: "Internal server error" });
 	}
 };
+
+exports.deleteUser = async (request, response) => {
+	const { userId } = request.body;
+	console.log("body", userId);
+	try {
+		await client.query("DELETE FROM users WHERE id =  $1", [userId]);
+		response.status(200).json({
+			message: "Användare borttagen!"
+		});
+	} catch (error) {
+		console.log(error);
+		response.status(500).json({
+			problem: "Nu gick det inte att deleta kontakta email@enai.com",
+			error: error.message
+		});
+	}
+};
