@@ -10,7 +10,7 @@ export default function Logout() {
   const handleLogout = () => {
     setUser('');
     setToken('');
-    navigate('/login');
+    navigate('/');
   };
 
   return (

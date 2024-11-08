@@ -7,6 +7,7 @@ import SignupForm from './components/SignupForm';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import HomePage from './pages/HomePage';
 import AuthProvider from './AuthProvider';
+import Header from './components/Header';
 
 function App() {
   // useEffect(() => {
@@ -21,6 +22,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<WelcomePage />} />
           <Route path="/login" element={<Login />} />
