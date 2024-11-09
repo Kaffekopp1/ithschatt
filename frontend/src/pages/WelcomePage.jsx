@@ -6,7 +6,6 @@ import {
   CardContent,
 } from '../components/ui/card';
 import { Button } from '../components/ui/button';
-import Logout from '../components/Logout';
 
 const WelcomePage = () => {
   const navigate = useNavigate();
@@ -25,9 +24,8 @@ const WelcomePage = () => {
             Create new account
           </Button>
           <Button onClick={() => navigate('/homepage')} variant="outline">
-            homepage
+            Chat
           </Button>
-          <Logout />
         </CardContent>
       </Card>
     </div>
