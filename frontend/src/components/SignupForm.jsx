@@ -87,7 +87,7 @@ export default function SignupForm() {
 					<FormField
 						control={form.control}
 						name="firstName"
-						render={({ field }) => (
+						render={({ field }) => (	
 							<FormItem>
 								<FormLabel>Förnamn</FormLabel>
 								<FormControl>
