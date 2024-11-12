@@ -55,6 +55,7 @@ export default function Login() {
 					setUserId(answer.id);
 					localStorage.setItem('user', data.username);
 					localStorage.setItem('token', answer.token);
+					setToken(answer.token);
 					updateAnswer && navigate('/homepage');
 				} catch (error) {
 					console.error('Error vid statusuppdatering :', error);
