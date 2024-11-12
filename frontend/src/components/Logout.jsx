@@ -14,9 +14,9 @@ export default function Logout() {
 			console.error('Error updating user status', error);
 		}
 
-		setUserId('');
 		setUser('');
 		setToken('');
+		setUserId('');
 		navigate('/login');
 	};
 
