@@ -34,6 +34,11 @@ function Header() {
 						>
 							{user ? user : 'Login'}
 						</NavigationMenuTrigger>
+						{user && (
+							<NavigationMenuLink href="/bildgalleri">
+								bildgalleri
+							</NavigationMenuLink>
+						)}
 						<NavigationMenuContent>
 							<NavigationMenuLink href="/settings">Settings</NavigationMenuLink>
 							<NavigationMenuLink> {user && <Logout />}</NavigationMenuLink>
