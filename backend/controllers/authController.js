@@ -9,9 +9,7 @@ exports.registerUser = async (request, response) => {
 	const hashedPassword = await argon2.hash(password, 10);
 
 	try {
-		// Start transaction
 		await client.query('BEGIN');
-
 		const result = await client.query(
 			`INSERT INTO users (username, password_hash, email) VALUES ($1, $2, $3) RETURNING id`,
 			[username, hashedPassword, email]
@@ -21,7 +19,7 @@ exports.registerUser = async (request, response) => {
 
 		await client.query(
 			`INSERT INTO user_status (user_id, status) VALUES ($1, $2)`,
-			[userId, false] // status default false
+			[userId, false]
 		);
 
 		// Commit transaction
@@ -33,7 +31,6 @@ exports.registerUser = async (request, response) => {
 			email: email,
 		});
 	} catch (error) {
-		// Rollback if something is missing
 		await client.query('ROLLBACK');
 		response.status(500).json({
 			problem: 'Registreringen blev fel!',
