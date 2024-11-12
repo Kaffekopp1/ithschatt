@@ -1,0 +1,34 @@
+Personuppgiftspolicy för ChattApp
+Vi samlar in och behandlar personuppgifter om dig, inklusive förnamn, efternamn, e-postadress, adress och användarnamn. Syftet med denna behandling är följande:
+
+1. Skapa och administrera användarkonton
+Vi samlar in personuppgifter, såsom användarnamn, förnamn och efternamn, för att skapa och identifiera användarkonton i vår chatt-applikation. Detta är nödvändigt för att tillhandahålla en säker och funktionell tjänst.
+
+2. Kommunicera med användare
+Vi använder din e-postadress för att skicka viktig information, såsom kontobekräftelser, lösenordsåterställningar eller meddelanden relaterade till din aktivitet i applikationen. Detta görs för att säkerställa en god användarupplevelse och säkerhet.
+
+3. Förbättra och anpassa tjänsten
+Personuppgifter, inklusive användarnamn och adress, kan användas för att förbättra applikationens funktionalitet och användarupplevelse. Detta kan innebära att ge geografiskt anpassad information eller visa lokalanpassade annonser baserat på din adress (om relevant).
+
+4. Säkerställa säkerhet och förhindra missbruk
+Vi använder personuppgifter för att övervaka och hantera användarkonton, förhindra otillåten åtkomst och upprätthålla en säker miljö för alla användare.
+
+Insamling av uppgifter
+Vi har fått dina uppgifter när du skapade ditt användarkonto i vår chatt-applikation. Du har själv registrerat ditt förnamn, efternamn, e-postadress, användarnamn och eventuellt andra uppgifter i samband med användningen av vår tjänst.
+Rättslig grund och lagring
+Vi följer gällande dataskyddslagstiftning vid all behandling av personuppgifter. Den rättsliga grunden för att behandla dina uppgifter är ditt samtycke. Du har rätt att när som helst återkalla ditt samtycke till behandlingen. Ett återkallande påverkar inte lagligheten av behandlingen innan samtycket återkallades.
+Dina uppgifter kommer att sparas i ett år efter senaste aktivitet.
+
+Delning av uppgifter
+Vi delar inte dina personuppgifter med externa parter. Uppgifter som ditt användarnamn, förnamn, efternamn och e-postadress kan vara synliga för andra användare som är inloggade i systemet, i samband med att du använder vår chattfunktion.
+Vi delar inte dina uppgifter med externa företag, myndigheter eller tjänsteleverantörer och vi använder inte några personuppgiftsbiträden för att behandla dina personuppgifter.
+
+Delning vid rättsliga krav
+Vi kan komma att dela dina personuppgifter med tredje part om vi är skyldiga att göra det enligt lag.
+
+Överföring till tredje land
+Vi kommer inte att överföra dina uppgifter till ett land utanför EU. Alla personuppgifter som vi behandlar lagras och behandlas på servrar inom EU, och vi vidtar lämpliga säkerhetsåtgärder för att skydda dina uppgifter i enlighet med gällande lagstiftning.
+
+Personuppgiftsansvarig
+Personuppgiftsansvarig är Kajsa, Christoffer och Peter på IT-högskolan. Du har rätt att kontakta oss om du vill ta del av information om de uppgifter vi har om dig, begära rättelse, överföring eller att vi begränsar behandlingen av dina uppgifter, eller om du vill göra invändningar eller begära radering.
+Kontaktinformation: Du kan kontakta oss på IT-högskolan för dessa ändamål. Du når vårt dataskyddsombud på: skyddsombud@iths.se Om du har klagomål på vår behandling av dina personuppgifter har du rätt att inge klagomål till tillsynsmyndigheten Integritetsskyddsmyndigheten (IMY).
