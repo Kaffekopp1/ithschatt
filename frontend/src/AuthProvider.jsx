@@ -14,7 +14,10 @@ export default function AuthProvider({ children }) {
 		userId,
 		setUserId,
 	};
-
+	if (!user) {
+		setUser(localStorage.getItem('user'));
+		console.log('user local', localStorage.getItem('user'));
+	}
 	return (
 		<>
 			<AuthContext.Provider value={value}>{children}</AuthContext.Provider>
