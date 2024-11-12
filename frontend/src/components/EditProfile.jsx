@@ -21,51 +21,73 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import AuthContext from '../AuthContext';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 
 const schema = z.object({
-	username: z.string().min(3, 'Användarnamnet måste vara minst 3 tecken'),
-	firstName: z.string().min(1, 'fyll i ditt förnamn'),
-	lastName: z.string().min(1, 'fyll i ditt efternamn'),
+	username: z
+		.string()
+		.min(3, 'Användarnamnet måste vara minst 3 tecken')
+		.or(z.string().length(0)),
+	first_name: z.string().min(1, 'fyll i ditt förnamn').or(z.string().length(0)),
+	last_name: z.string().min(1, 'fyll i ditt efternamn'),
 	email: z.string().email('Epost-adressen måste ha ett giltigt format'),
-	password: z.string().min(8, 'Lösenordet måste vara minst 8 tecken'),
+	password_hash: z.string().min(8, 'Lösenordet måste vara minst 8 tecken'),
 	ssn: z.string().min(12, 'felaktigt personnr'),
 });
 
 export function EditProfile() {
-	const { user, userId } = useContext(AuthContext);
-
-	const onSubmit = (data) => {
-		console.log('Data:', data);
-	};
+	const { user, userId, setUserId, setUser, setToken } =
+		useContext(AuthContext);
 
 	const form = useForm({
 		resolver: zodResolver(schema),
 		defaultValues: {
 			username: user,
 			email: '',
-			password: '',
-			firstName: '',
-			lastName: '',
+			password_hash: '',
+			first_name: '',
+			last_name: '',
 			ssn: '',
 		},
 	});
 
-	useEffect(() => {
-		if (user) {
-			form.reset({
-				username: user,
-				email: user.email,
+	const updateProfile = async (data) => {
+		try {
+			console.log('userId :>> ', userId);
+			const response = await fetch('http://localhost:3000/updateUserInfo', {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					userId: userId,
+					username: data.username,
+					email: data.email,
+					first_name: data.first_name,
+					last_name: data.last_name,
+					password_hash: data.password_hash,
+					// ssn: data.ssn,
+				}),
 			});
+			if (!response.ok) {
+				// Hämta felmeddelandet från servern om svar ej OK
+				const errorMessage = await response.json();
+				console.error('Fel från servern:', errorMessage);
+				return;
+			}
+
+			const answer = await response.json();
+			console.log('Användare', answer.user);
+			if (answer.user) {
+				console.log('Användare', answer.user);
+			}
+		} catch (error) {
+			alert('Något gick fel vid API-förfrågan');
+			console.error('Error vid API-förfrågan:', error);
 		}
-	}, [user, form]);
-
-	// const passwordValue = form.watch("password");
-
-	console.log('userId :>> ', userId);
-	useEffect(() => {
-		console.log('user :>> ', user);
-	});
+	};
+	console.log('filteredData:');
+	console.log('userId:', userId);
 
 	return (
 		user && (
@@ -81,7 +103,10 @@ export function EditProfile() {
 						</DialogDescription>
 					</DialogHeader>
 					<Form {...form}>
-						<form onSubmit={form.handleSubmit(onSubmit)} className="grid py-4 ">
+						<form
+							onSubmit={form.handleSubmit(updateProfile)}
+							className="grid py-4 "
+						>
 							<FormField
 								className="grid grid-cols-4 items-center"
 								control={form.control}
@@ -97,7 +122,7 @@ export function EditProfile() {
 											className="col-span-3 m-0 text-xs"
 											style={{ minHeight: '1rem' }}
 										>
-											{form.formState.errors.username && (
+											{field.value && form.formState.errors.username && (
 												<FormMessage className="text-[0.6rem]" />
 											)}
 										</div>
@@ -107,7 +132,7 @@ export function EditProfile() {
 							<FormField
 								className="grid grid-cols-4 items-center"
 								control={form.control}
-								name="firstName"
+								name="first_name"
 								render={({ field }) => (
 									<FormItem className="grid grid-cols-4 items-center gap-x-4 space-y-1">
 										<FormLabel className="text-right">Förnamn</FormLabel>
@@ -119,7 +144,7 @@ export function EditProfile() {
 											className="col-span-3 m-0 text-xs "
 											style={{ minHeight: '1rem' }}
 										>
-											{form.formState.errors.firstName && (
+											{form.formState.errors.first_name && (
 												<FormMessage className="text-[0.6rem]" />
 											)}
 										</div>
@@ -129,7 +154,7 @@ export function EditProfile() {
 							<FormField
 								className="grid grid-cols-4 items-center"
 								control={form.control}
-								name="lastName"
+								name="last_name"
 								render={({ field }) => (
 									<FormItem className="grid grid-cols-4 items-center gap-x-4 space-y-1">
 										<FormLabel className="text-right">Efternamn</FormLabel>
@@ -141,7 +166,7 @@ export function EditProfile() {
 											className="col-span-3 m-0 text-xs "
 											style={{ minHeight: '1rem' }}
 										>
-											{form.formState.errors.lastName && (
+											{form.formState.errors.last_name && (
 												<FormMessage className="text-[0.6rem]" />
 											)}
 										</div>
@@ -178,12 +203,7 @@ export function EditProfile() {
 									<FormItem className="grid grid-cols-4 items-center gap-x-4 space-y-1">
 										<FormLabel className="text-right">Mailadress</FormLabel>
 										<FormControl className="grid-cols-4">
-											<Input
-												className="col-span-3"
-												type="email"
-												// defaultValue={email}
-												{...field}
-											/>
+											<Input className="col-span-3" type="email" {...field} />
 										</FormControl>
 										<div className="text-right"></div>
 										<div
@@ -200,14 +220,14 @@ export function EditProfile() {
 							<FormField
 								className="grid grid-cols-4 items-center"
 								control={form.control}
-								name="password"
+								name="password_hash"
 								render={({ field }) => (
 									<FormItem className="grid grid-cols-4 items-center gap-x-4 space-y-1 mb-4">
 										<FormLabel className="text-right">Lösenord</FormLabel>
 										<FormControl className="grid-cols-4">
 											<Input
 												className="col-span-3"
-												type="password"
+												type="password_hash"
 												placeholder="••••••••"
 												{...field}
 											/>
@@ -217,7 +237,7 @@ export function EditProfile() {
 											className="col-span-3 m-0 text-xs c"
 											style={{ minHeight: '1.5rem' }}
 										>
-											{form.formState.errors.password && (
+											{form.formState.errors.password_hash && (
 												<FormMessage className="text-[0.6rem]" />
 											)}
 										</div>
