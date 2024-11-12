@@ -23,8 +23,8 @@ export default function SignupForm() {
     lastName: z.string().min(1, 'Fyll i ditt efternamn'),
     email: z.string().email('Epost-adressen måste ha ett giltigt format'),
     password: z.string().min(8, 'Lösenordet måste vara minst 8 tecken'),
-    Adress: z.string().max(50, 'Adressen får vara högst 50 tecken'),
-    Postnummer: z.number().max(5, 'Ogiltigt postnummer'),
+    adress: z.string().max(50, 'Adressen får vara högst 50 tecken'),
+    postalnr: z.string().max(5, 'Ogiltigt postnummer'),
     consent: z.boolean(),
   });
 
@@ -42,8 +42,8 @@ export default function SignupForm() {
           firstName: data.firstName,
           lastName: data.lastName,
           password: data.password,
-          address: data.adress,
-          postnummer: data.postnummer,
+          adress: data.adress,
+          postalnr: data.postalnr,
           consent: data.consent,
         }),
       });
@@ -63,8 +63,8 @@ export default function SignupForm() {
       password: '',
       firstName: '',
       lastName: '',
-      address: '',
-      postnummer: '',
+      adress: '',
+      postalnr: '',
       consent: false,
     },
   });
@@ -120,7 +120,7 @@ export default function SignupForm() {
           />
           <FormField
             control={form.control}
-            name="address"
+            name="adress"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Address</FormLabel>
@@ -133,7 +133,7 @@ export default function SignupForm() {
           />
           <FormField
             control={form.control}
-            name="postnummer"
+            name="postalnr"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Postnummer</FormLabel>
