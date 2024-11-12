@@ -9,8 +9,7 @@ export default function Logout() {
 
 	const handleLogout = async () => {
 		try {
-			const updateAnswer = await updateUserStatus(userId);
-			console.log('User status updated:', updateAnswer);
+			await updateUserStatus(userId);
 		} catch (error) {
 			console.error('Error updating user status', error);
 		}
