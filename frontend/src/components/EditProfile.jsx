@@ -29,15 +29,23 @@ const schema = z.object({
 		.min(3, 'Användarnamnet måste vara minst 3 tecken')
 		.or(z.string().length(0)),
 	first_name: z.string().min(1, 'fyll i ditt förnamn').or(z.string().length(0)),
-	last_name: z.string().min(1, 'fyll i ditt efternamn'),
-	email: z.string().email('Epost-adressen måste ha ett giltigt format'),
-	password_hash: z.string().min(8, 'Lösenordet måste vara minst 8 tecken'),
-	ssn: z.string().min(12, 'felaktigt personnr'),
+	last_name: z
+		.string()
+		.min(1, 'fyll i ditt efternamn')
+		.or(z.string().length(0)),
+	email: z
+		.string()
+		.email('Epost-adressen måste ha ett giltigt format')
+		.or(z.string().length(0)),
+	password_hash: z
+		.string()
+		.min(8, 'Lösenordet måste vara minst 8 tecken')
+		.or(z.string().length(0)),
+	// ssn: z.string().min(12, 'felaktigt personnr').or(z.string().length(0)),
 });
 
 export function EditProfile() {
-	const { user, userId, setUserId, setUser, setToken } =
-		useContext(AuthContext);
+	const { user, userId } = useContext(AuthContext);
 
 	const form = useForm({
 		resolver: zodResolver(schema),
@@ -47,7 +55,7 @@ export function EditProfile() {
 			password_hash: '',
 			first_name: '',
 			last_name: '',
-			ssn: '',
+			// ssn: '',
 		},
 	});
 
@@ -86,8 +94,6 @@ export function EditProfile() {
 			console.error('Error vid API-förfrågan:', error);
 		}
 	};
-	console.log('filteredData:');
-	console.log('userId:', userId);
 
 	return (
 		user && (
