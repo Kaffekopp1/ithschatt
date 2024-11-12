@@ -15,8 +15,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignupForm() {
+  const navigate = useNavigate();
   const schema = z.object({
     username: z.string().min(3, 'Användarnamnet måste vara minst 3 tecken'),
     firstName: z.string().min(1, 'Fyll i ditt förnamn'),
@@ -30,6 +32,10 @@ export default function SignupForm() {
 
   const onSubmit = async (data) => {
     console.log('data', data.username);
+    if (!data.consent) {
+      data.adress = '';
+      data.postalnr = '';
+    }
     try {
       const response = await fetch('http://localhost:3000/register', {
         method: 'POST',
@@ -49,6 +55,7 @@ export default function SignupForm() {
       });
       const answer = await response.json();
       console.log(answer);
+      answer && navigate('/login');
     } catch (error) {
       alert('något gick fel');
       console.error('Error vid api fråga:', error);
@@ -184,7 +191,10 @@ export default function SignupForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Checkbox {...field} />
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
                 </FormControl>
                 <FormLabel>
                   Kryssa i rutan om du vill ha informationsbrev skickade till
