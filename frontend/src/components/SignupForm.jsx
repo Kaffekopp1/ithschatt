@@ -15,21 +15,27 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignupForm() {
+  const navigate = useNavigate();
   const schema = z.object({
     username: z.string().min(3, 'Användarnamnet måste vara minst 3 tecken'),
     firstName: z.string().min(1, 'Fyll i ditt förnamn'),
     lastName: z.string().min(1, 'Fyll i ditt efternamn'),
     email: z.string().email('Epost-adressen måste ha ett giltigt format'),
     password: z.string().min(8, 'Lösenordet måste vara minst 8 tecken'),
-    Adress: z.string().max(50, 'Adressen får vara högst 50 tecken'),
-    Postnummer: z.number().max(5, 'Ogiltigt postnummer'),
+    adress: z.string().max(50, 'Adressen får vara högst 50 tecken'),
+    postalnr: z.string().max(5, 'Ogiltigt postnummer'),
     consent: z.boolean(),
   });
 
   const onSubmit = async (data) => {
     console.log('data', data.username);
+    if (!data.consent) {
+      data.adress = '';
+      data.postalnr = '';
+    }
     try {
       const response = await fetch('http://localhost:3000/register', {
         method: 'POST',
@@ -42,13 +48,14 @@ export default function SignupForm() {
           firstName: data.firstName,
           lastName: data.lastName,
           password: data.password,
-          address: data.adress,
-          postnummer: data.postnummer,
+          adress: data.adress,
+          postalnr: data.postalnr,
           consent: data.consent,
         }),
       });
       const answer = await response.json();
       console.log(answer);
+      answer && navigate('/login');
     } catch (error) {
       alert('något gick fel');
       console.error('Error vid api fråga:', error);
@@ -63,8 +70,8 @@ export default function SignupForm() {
       password: '',
       firstName: '',
       lastName: '',
-      address: '',
-      postnummer: '',
+      adress: '',
+      postalnr: '',
       consent: false,
     },
   });
@@ -120,7 +127,7 @@ export default function SignupForm() {
           />
           <FormField
             control={form.control}
-            name="address"
+            name="adress"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Address</FormLabel>
@@ -133,7 +140,7 @@ export default function SignupForm() {
           />
           <FormField
             control={form.control}
-            name="postnummer"
+            name="postalnr"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Postnummer</FormLabel>
@@ -184,7 +191,10 @@ export default function SignupForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Checkbox {...field} />
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
                 </FormControl>
                 <FormLabel>
                   Kryssa i rutan om du vill ha informationsbrev skickade till
