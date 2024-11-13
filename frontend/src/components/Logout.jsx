@@ -19,6 +19,7 @@ export default function Logout() {
 		setUserId('');
 		localStorage.removeItem('user');
 		localStorage.removeItem('token');
+		localStorage.removeItem('id');
 		navigate('/login');
 	};
 

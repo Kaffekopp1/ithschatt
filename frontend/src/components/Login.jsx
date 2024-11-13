@@ -53,6 +53,7 @@ export default function Login() {
 					const updateAnswer = await updateUserStatus(answer.id);
 					console.log('User status updated:', updateAnswer);
 					setUserId(answer.id);
+					localStorage.setItem('id', answer.id)
 					localStorage.setItem('user', data.username);
 					localStorage.setItem('token', answer.token);
 					setToken(answer.token);
