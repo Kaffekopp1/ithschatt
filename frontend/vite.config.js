@@ -11,24 +11,15 @@ const __dirname = path.dirname(__filename); // get the name of the directory
 
 // https://vite.dev/config/
 export default defineConfig({
-<<<<<<< HEAD
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/api': 'http://localhost:3000',
-    },
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-=======
 	plugins: [react()],
+	server: {
+		proxy: {
+			'/api': 'http://localhost:3000',
+		},
+	},
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),
 		},
 	},
->>>>>>> b7c709d (testing yaml)
 });
