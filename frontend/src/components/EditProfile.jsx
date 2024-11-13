@@ -60,7 +60,6 @@ export function EditProfile() {
 
 	const updateProfile = async (data) => {
 		try {
-			console.log('userId :>> ', userId);
 			const response = await fetch('http://localhost:3000/updateUserInfo', {
 				method: 'PATCH',
 				headers: {
