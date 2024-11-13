@@ -1,6 +1,11 @@
 node_modules
+<<<<<<< HEAD
 data
 Compose.yaml
 .env
 nginx.conf
+=======
+/data
+/frontend/dist
+>>>>>>> b7c709d (testing yaml)
 compose.yaml

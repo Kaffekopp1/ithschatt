@@ -14,7 +14,11 @@ app.use(cors());
 app.use(express.json());
 
 const io = new Server(server, {
+<<<<<<< HEAD
   cors: { origin: 'http://localhost:80', methods: ['GET', 'POST'] },
+=======
+	cors: { origin: 'http://localhost', methods: ['GET', 'POST'] },
+>>>>>>> b7c709d (testing yaml)
 });
 
 io.on('connection', (socket) => {
