@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import WelcomePage from './pages/WelcomePage';
 import Login from './components/Login';
+import TestSida from './pages/TestSida.jsx';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import AuthProvider from './AuthProvider';
 import Header from './components/Header';
@@ -22,6 +23,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<WelcomePage />} />
 					<Route path="/login" element={<Login />} />
+					<Route path="/TestSida" element={<TestSida />} />
 					<Route
 						path="/SignupForm"
 						element={

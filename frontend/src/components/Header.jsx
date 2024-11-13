@@ -24,6 +24,9 @@ function Header() {
 			<NavigationMenu>
 				<NavigationMenuList className="flex items-center space-x-4 w-200">
 					<NavigationMenuItem>
+						<NavigationMenuLink onClick={() => navigate('/testsida')}>
+							TestSida
+						</NavigationMenuLink>
 						<NavigationMenuTrigger
 							onClick={() => {
 								if (!user) {
