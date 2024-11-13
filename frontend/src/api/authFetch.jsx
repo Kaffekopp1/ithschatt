@@ -1,4 +1,5 @@
 export async function updateUserStatus(userId) {
+<<<<<<< HEAD
   try {
     const response = await fetch('/api/updateUserStatus', {
       method: 'PATCH',
@@ -7,6 +8,16 @@ export async function updateUserStatus(userId) {
       },
       body: JSON.stringify({ user_id: userId }),
     });
+=======
+	try {
+		const response = await fetch('http://localhost:3000/api/updateUserStatus', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ user_id: userId }),
+		});
+>>>>>>> 8b2971d (changes in localhost api)
 
     if (!response.ok) {
       throw new Error(
