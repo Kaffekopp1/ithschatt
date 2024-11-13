@@ -1,7 +1,4 @@
 node_modules
 .env
-<<<<<<< HEAD
 Dockerfile
-=======
 dockerfile
->>>>>>> b7c709d (testing yaml)
