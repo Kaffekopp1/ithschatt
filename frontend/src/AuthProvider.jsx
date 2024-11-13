@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
+
 import AuthContext from './AuthContext';
 
 export default function AuthProvider({ children }) {
@@ -7,6 +8,7 @@ export default function AuthProvider({ children }) {
 	const [token, setToken] = useState('empty');
 	const [userId, setUserId] = useState('');
 	const [loading, setLoading] = useState('true');
+  
 	const value = {
 		user,
 		setUser,

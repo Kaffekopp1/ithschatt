@@ -29,15 +29,23 @@ const schema = z.object({
 		.min(3, 'Användarnamnet måste vara minst 3 tecken')
 		.or(z.string().length(0)),
 	first_name: z.string().min(1, 'fyll i ditt förnamn').or(z.string().length(0)),
-	last_name: z.string().min(1, 'fyll i ditt efternamn'),
-	email: z.string().email('Epost-adressen måste ha ett giltigt format'),
-	password_hash: z.string().min(8, 'Lösenordet måste vara minst 8 tecken'),
-	ssn: z.string().min(12, 'felaktigt personnr'),
+	last_name: z
+		.string()
+		.min(1, 'fyll i ditt efternamn')
+		.or(z.string().length(0)),
+	email: z
+		.string()
+		.email('Epost-adressen måste ha ett giltigt format')
+		.or(z.string().length(0)),
+	password_hash: z
+		.string()
+		.min(8, 'Lösenordet måste vara minst 8 tecken')
+		.or(z.string().length(0)),
+	// ssn: z.string().min(12, 'felaktigt personnr').or(z.string().length(0)),
 });
 
 export function EditProfile() {
-	const { user, userId, setUserId, setUser, setToken } =
-		useContext(AuthContext);
+	const { user, userId } = useContext(AuthContext);
 
 	const form = useForm({
 		resolver: zodResolver(schema),
@@ -47,7 +55,6 @@ export function EditProfile() {
 			password_hash: '',
 			first_name: '',
 			last_name: '',
-			ssn: '',
 		},
 	});
 
@@ -66,28 +73,23 @@ export function EditProfile() {
 					first_name: data.first_name,
 					last_name: data.last_name,
 					password_hash: data.password_hash,
-					// ssn: data.ssn,
 				}),
 			});
 			if (!response.ok) {
-				// Hämta felmeddelandet från servern om svar ej OK
 				const errorMessage = await response.json();
-				console.error('Fel från servern:', errorMessage);
+				console.error('Det går inte att ändra användaruppgifter', errorMessage);
 				return;
 			}
 
 			const answer = await response.json();
-			console.log('Användare', answer.user);
+
 			if (answer.user) {
 				console.log('Användare', answer.user);
 			}
 		} catch (error) {
-			alert('Något gick fel vid API-förfrågan');
-			console.error('Error vid API-förfrågan:', error);
+			console.error('Det gick inte att uppdatera användaruppgifter:', error);
 		}
 	};
-	console.log('filteredData:');
-	console.log('userId:', userId);
 
 	return (
 		user && (
@@ -167,28 +169,6 @@ export function EditProfile() {
 											style={{ minHeight: '1rem' }}
 										>
 											{form.formState.errors.last_name && (
-												<FormMessage className="text-[0.6rem]" />
-											)}
-										</div>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								className="grid grid-cols-4 items-center"
-								control={form.control}
-								name="ssn"
-								render={({ field }) => (
-									<FormItem className="grid grid-cols-4 items-center gap-x-4 space-y-1">
-										<FormLabel className="text-right">Personnummer</FormLabel>
-										<FormControl className="grid-cols-4 ">
-											<Input className="col-span-3" type="number" {...field} />
-										</FormControl>
-										<div className="text-right"></div>
-										<div
-											className="col-span-3 m-0 text-xs "
-											style={{ minHeight: '1rem' }}
-										>
-											{form.formState.errors.ssn && (
 												<FormMessage className="text-[0.6rem]" />
 											)}
 										</div>
