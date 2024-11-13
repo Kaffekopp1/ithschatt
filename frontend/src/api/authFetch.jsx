@@ -1,6 +1,6 @@
 export async function updateUserStatus(userId) {
 	try {
-		const response = await fetch('http://localhost:3000/updateUserStatus', {
+		const response = await fetch('/api/updateUserStatus', {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',

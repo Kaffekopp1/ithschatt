@@ -60,7 +60,7 @@ export function EditProfile() {
 
 	const updateProfile = async (data) => {
 		try {
-			const response = await fetch('http://localhost:3000/updateUserInfo', {
+			const response = await fetch('/api/updateUserInfo', {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',

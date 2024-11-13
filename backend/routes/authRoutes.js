@@ -3,11 +3,11 @@ const router = express.Router();
 const userController = require('../controllers/authController');
 // const verifyToken = require("../middleware/authMiddleware");
 
-router.post('/register', userController.registerUser);
-router.post('/login', userController.loginUser);
-router.delete('/deleteuser', userController.deleteUser);
-router.patch('/updateUserStatus', userController.updateUserStatus);
-router.patch('/updateUserInfo', userController.updateUserInfo);
+router.post('/api/register', userController.registerUser);
+router.post('/api/login', userController.loginUser);
+router.delete('/api/deleteuser', userController.deleteUser);
+router.patch('/api/updateUserStatus', userController.updateUserStatus);
+router.patch('/api/updateUserInfo', userController.updateUserInfo);
 // router.patch
 
 // router.get("/auth", verifyToken, (req, res) => {

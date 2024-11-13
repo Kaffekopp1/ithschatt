@@ -27,7 +27,7 @@ export default function Login() {
 	const onSubmit = async (data) => {
 		console.log('data', data.username);
 		try {
-			const response = await fetch('http://localhost:3000/login', {
+			const response = await fetch('/api/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export default function Login() {
 					const updateAnswer = await updateUserStatus(answer.id);
 					console.log('User status updated:', updateAnswer);
 					setUserId(answer.id);
-					localStorage.setItem('id', answer.id)
+					localStorage.setItem('id', answer.id);
 					localStorage.setItem('user', data.username);
 					localStorage.setItem('token', answer.token);
 					setToken(answer.token);
