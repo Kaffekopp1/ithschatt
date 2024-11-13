@@ -21,9 +21,8 @@ function Header() {
 			<div className="flex-1 text-center">
 				<h1 className="text-xl font-semibold">ChatApp</h1>
 			</div>
-			<EditProfile />
 			<NavigationMenu>
-				<NavigationMenuList className="flex items-center space-x-4">
+				<NavigationMenuList className="flex items-center space-x-4 w-200">
 					<NavigationMenuItem>
 						<NavigationMenuTrigger
 							onClick={() => {
@@ -35,6 +34,7 @@ function Header() {
 							{user ? user : 'Login'}
 						</NavigationMenuTrigger>
 						<NavigationMenuContent>
+							{user && <EditProfile />}
 							<NavigationMenuLink href="/settings">Settings</NavigationMenuLink>
 							<NavigationMenuLink> {user && <Logout />}</NavigationMenuLink>
 						</NavigationMenuContent>
