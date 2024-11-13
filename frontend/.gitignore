@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+Dockerfile
+nginx.conf
 
 # Editor directories and files
 .vscode

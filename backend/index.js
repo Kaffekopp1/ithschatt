@@ -5,7 +5,7 @@ const http = require('http');
 dotenv.config();
 
 const app = express(),
-	port = 3000;
+  port = 3000;
 
 const cors = require('cors');
 const server = http.createServer(app);
@@ -14,19 +14,19 @@ app.use(cors());
 app.use(express.json());
 
 const io = new Server(server, {
-	cors: { origin: 'http://localhost:5173', methods: ['GET', 'POST'] },
+  cors: { origin: 'http://localhost:80', methods: ['GET', 'POST'] },
 });
 
 io.on('connection', (socket) => {
-	console.log(`A user connected: ${socket.id}`);
-	socket.on('send_message', (data) => {
-		console.log('data', data);
-		socket.broadcast.emit('receive_message', data);
-	});
+  console.log(`A user connected: ${socket.id}`);
+  socket.on('send_message', (data) => {
+    console.log('data', data);
+    socket.broadcast.emit('receive_message', data);
+  });
 
-	socket.on('disconnect', () => {
-		console.log(`User disconnected: ${socket.id}`);
-	});
+  socket.on('disconnect', () => {
+    console.log(`User disconnected: ${socket.id}`);
+  });
 });
 
 const messageRoutes = require('./routes/messageRoutes');
@@ -37,11 +37,11 @@ app.use(authRoutes);
 app.use(protectedRoutes);
 
 app.get('/', (_request, response) => {
-	response.json({ hello: 'Världen' });
+  response.json({ hello: 'Världen' });
 });
 server.listen(4000, () => {
-	console.log('Listening on *:4000');
+  console.log('Listening on *:4000');
 });
 app.listen(port, () => {
-	console.log(`Ready on http://localhost:${port}/`);
+  console.log(`Ready on http://localhost:${port}/`);
 });
