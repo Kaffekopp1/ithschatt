@@ -10,17 +10,22 @@ const app = express(),
 const cors = require('cors');
 const server = http.createServer(app);
 
-app.use(cors({
-	origin: 'http://frontend',
-	methods: ['GET', 'POST'],
-}));
+app.use(cors());
 app.use(express.json());
 
 // ändra till 5173 vid lokalt.
 const io = new Server(server, {
-	cors: { origin: 'http://localhost', methods: ['GET', 'POST'] },
+	cors: {
+		origin: [
+			'http://frontend',
+			'http://localhost',
+			'http://localhost:80',
+			'http://localhost/homepage',
+		],
+		methods: ['GET', 'POST'],
+	},
 });
-
+console.log('docker peter');
 io.on('connection', (socket) => {
 	console.log(`A user connected: ${socket.id}`);
 	socket.on('send_message', (data) => {

@@ -93,7 +93,7 @@ exports.loginUser = async (_request, response) => {
 
 exports.updateUserStatus = async (_request, response) => {
 	const { user_id } = _request.body;
-
+	console.log('hej', user_id);
 	if (!user_id) {
 		return response.status(400).json({ message: 'User ID is required' });
 	}

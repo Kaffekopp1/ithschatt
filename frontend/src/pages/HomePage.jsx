@@ -3,14 +3,15 @@ import io from 'socket.io-client';
 import AuthContext from '../AuthContext';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChatWindow } from '../components/ChatWindow';
 export default function HomePage() {
-	const socket = io.connect('http://localhost:4000');
 	const [message, setMessage] = useState('exapmple');
 	const [incomming, setIncomming] = useState([]);
 	const [arri, setArri] = useState([]);
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
+
+	const socket = io.connect('/');
+
 	function sendMessage() {
 		socket.emit('send_message', { message: message });
 	}
@@ -31,7 +32,6 @@ export default function HomePage() {
 
 	return (
 		<div>
-			<ChatWindow />
 			<div className="App">
 				<input
 					placeholder="Message"

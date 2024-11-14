@@ -21,6 +21,7 @@ import {
 } from './ui/sidebar';
 import AuthContext from '../AuthContext';
 
+// const socket = io.connect('http://backend:4000');
 const socket = io.connect('/');
 
 export function ChatWindow() {
