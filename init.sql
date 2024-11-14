@@ -1,6 +1,6 @@
-DROP TABLE users;
-DROP TABLE user_status;
-DROP TABLE messages;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS user_status;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -28,3 +28,7 @@ CREATE TABLE messages (
     content TEXT NOT NULL,
     sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO users (username, firstName, lastName, password_hash, email, adress, postalnr, consent)
+VALUES
+('johndoe', 'John', 'Doe', 'hashedpassword123', 'johndoe@example.com', 'Main Street 123', '12345', true);

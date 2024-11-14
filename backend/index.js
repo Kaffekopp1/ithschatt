@@ -10,12 +10,15 @@ const app = express(),
 const cors = require('cors');
 const server = http.createServer(app);
 
-app.use(cors());
+app.use(cors({
+	origin: 'http://frontend',
+	methods: ['GET', 'POST'],
+}));
 app.use(express.json());
 
-// ändra till 5173 vid localt.
+// ändra till 5173 vid lokalt.
 const io = new Server(server, {
-	cors: { origin: 'http://localhost:80', methods: ['GET', 'POST'] },
+	cors: { origin: 'http://localhost', methods: ['GET', 'POST'] },
 });
 
 io.on('connection', (socket) => {

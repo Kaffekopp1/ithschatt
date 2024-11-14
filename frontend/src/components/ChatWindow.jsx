@@ -117,15 +117,13 @@ export function ChatWindow() {
 							<div
 								key={message.id}
 								className={`mb-4 flex ${
-									message.sender === 'mainUser'
-										? 'justify-end'
-										: 'justify-start'
+									message.sender === user ? 'justify-end' : 'justify-start'
 								}`}
 							>
 								<div
 									className={`flex max-w-[80%] items-start gap-3 rounded-lg p-4 ${
-										message.sender === 'mainUser'
-											? 'bg-primary text-primary-foreground'
+										message.sender === user
+											? 'bg-blue-400 text-primary-foreground'
 											: 'bg-muted'
 									}`}
 								>
