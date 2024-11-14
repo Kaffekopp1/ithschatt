@@ -16,15 +16,11 @@ app.use(express.json());
 // ändra till 5173 vid lokalt.
 const io = new Server(server, {
 	cors: {
-		origin: [
-			'http://frontend',
-			'http://localhost',
-			'http://localhost:80',
-			'http://localhost/homepage',
-		],
+		origin: '*',
 		methods: ['GET', 'POST'],
 	},
 });
+
 console.log('docker peter');
 io.on('connection', (socket) => {
 	console.log(`A user connected: ${socket.id}`);

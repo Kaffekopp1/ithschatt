@@ -3,26 +3,28 @@ import io from 'socket.io-client';
 import AuthContext from '../AuthContext';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+const socket = io.connect('http://localhost:4000');
+
 export default function HomePage() {
 	const [message, setMessage] = useState('exapmple');
-	const [incomming, setIncomming] = useState([]);
 	const [arri, setArri] = useState([]);
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
+	const [messages, setReceiveMessage] = useState();
 
-	const socket = io.connect('/');
-
-	function sendMessage() {
+	async function sendMessage() {
 		socket.emit('send_message', { message: message });
 	}
+
 	useEffect(() => {
 		socket.on('receive_message', (data) => {
-			console.log('data', data);
-			setIncomming(data.message);
 			setArri([...arri, data.message]);
-			console.log('data.message', data.message);
 		});
-	}, [socket]);
+		return () => {
+			socket.off('receive_message');
+		};
+	}, [arri]);
+
 	function test() {
 		navigate('/bildgalleri');
 	}
