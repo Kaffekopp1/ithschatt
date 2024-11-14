@@ -132,13 +132,12 @@ exports.updateUserStatus = async (_request, response) => {
 				[isLoggedIn, user_id]
 			);
 		}
-		response.json({
-			message: `User status updated to ${isLoggedIn}`,
-			user_id: user_id,
-			newStatus: isLoggedIn,
-			LoggedOut: last_active,
-		});
-
+		// response.json({
+		// 	message: `User status updated to ${isLoggedIn}`,
+		// 	user_id: user_id,
+		// 	newStatus: isLoggedIn,
+		// 	LoggedOut: last_active,
+		// });
 	} catch (error) {
 		console.error('Error updating user status:', error);
 		response.status(500).json({ error: 'Internal server error' });

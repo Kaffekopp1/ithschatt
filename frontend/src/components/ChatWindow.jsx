@@ -21,7 +21,7 @@ import {
 } from './ui/sidebar';
 import AuthContext from '../AuthContext';
 
-const socket = io.connect('http://localhost:4000');
+const socket = io.connect('/');
 
 export function ChatWindow() {
 	const { user } = useContext(AuthContext);
@@ -52,7 +52,6 @@ export function ChatWindow() {
 		setMessages((prevMessages) => [...prevMessages, newUserMessage]);
 		setMessage('');
 	};
-
 
 	useEffect(() => {
 		socket.on('receive_message', (data) => {

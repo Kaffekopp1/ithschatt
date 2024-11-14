@@ -13,8 +13,9 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(express.json());
 
+// ändra till 5173 vid localt.
 const io = new Server(server, {
-	cors: { origin: 'http://localhost:5173', methods: ['GET', 'POST'] },
+	cors: { origin: 'http://localhost:80', methods: ['GET', 'POST'] },
 });
 
 io.on('connection', (socket) => {
