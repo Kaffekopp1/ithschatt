@@ -85,6 +85,7 @@ exports.loginUser = async (_request, response) => {
 			token,
 			message: 'Du är inloggad!',
 			id: rows[0].id,
+			userInfo: rows[0],
 		});
 	} catch (error) {
 		response.status(500).json({ error: 'Inloggningen gick fel!' });

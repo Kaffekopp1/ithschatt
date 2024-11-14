@@ -18,7 +18,7 @@ import { updateUserStatus } from '../api/authFetch';
 
 export default function Login() {
 	const navigate = useNavigate();
-	const { setToken, setUser, setUserId } = useContext(AuthContext);
+	const { setToken, setUser, setUserId, setUserInfo } = useContext(AuthContext);
 	const loginSchema = z.object({
 		username: z.string().min(1, 'fyll i användare'),
 		email: z.string().email('Det där är ingen emailadress'),
@@ -38,13 +38,19 @@ export default function Login() {
 					password: data.password,
 				}),
 			});
+
 			const answer = await response.json();
+			console.log('answer.userInfo :>> ', answer.userInfo);
+			console.log('svar1', answer);
+			console.log('svar2', answer.apa);
 			console.log(answer);
 			if (answer.error) {
 				alert('nu gick det på tok är det verkligen rätt uppgifter');
 			} else {
 				setToken(answer.token);
 				setUser(data.username);
+				setUserInfo(answer.userInfo);
+				console.log('userInfo :>> ', answer.userInfo);
 			}
 			if (!answer.id) {
 				throw new Error('User ID saknas i svaret från servern');
@@ -56,6 +62,8 @@ export default function Login() {
 					localStorage.setItem('id', answer.id);
 					localStorage.setItem('user', data.username);
 					localStorage.setItem('token', answer.token);
+					localStorage.setItem('userinfo', answer.userInfo);
+
 					setToken(answer.token);
 					updateAnswer && navigate('/homepage');
 				} catch (error) {

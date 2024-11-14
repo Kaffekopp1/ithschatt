@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { updateUserStatus } from '../api/authFetch';
 
 export default function Logout() {
-	const { setUser, setToken, userId, setUserId } = useContext(AuthContext);
+	const { setUser, setToken, userId, setUserId, setUserInfo } =
+		useContext(AuthContext);
 	const navigate = useNavigate();
 
 	const handleLogout = async () => {
@@ -17,9 +18,11 @@ export default function Logout() {
 		setUser('');
 		setToken('');
 		setUserId('');
+		setUserInfo('');
 		localStorage.removeItem('user');
 		localStorage.removeItem('token');
 		localStorage.removeItem('id');
+		localStorage.removeItem('userinfo');
 		navigate('/login');
 	};
 

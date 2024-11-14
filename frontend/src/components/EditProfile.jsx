@@ -37,31 +37,26 @@ const schema = z.object({
 		.string()
 		.email('Epost-adressen måste ha ett giltigt format')
 		.or(z.string().length(0)),
-	password_hash: z
-		.string()
-		.min(8, 'Lösenordet måste vara minst 8 tecken')
-		.or(z.string().length(0)),
-	// ssn: z.string().min(12, 'felaktigt personnr').or(z.string().length(0)),
 });
 
 export function EditProfile() {
-	const { user, userId } = useContext(AuthContext);
+	const { user, userId, userInfo, setUser, setUserInfo } =
+		useContext(AuthContext);
 
 	const form = useForm({
 		resolver: zodResolver(schema),
 		defaultValues: {
 			username: user,
-			email: '',
-			password_hash: '',
-			first_name: '',
-			last_name: '',
+			email: userInfo.email,
+			first_name: userInfo.firstname,
+			last_name: userInfo.lastname,
 		},
 	});
 
 	const updateProfile = async (data) => {
 		try {
 			const response = await fetch('/api/updateUserInfo', {
-			// const response = await fetch('/api/updateUserInfo', {
+				// const response = await fetch('/api/updateUserInfo', {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',
@@ -72,7 +67,6 @@ export function EditProfile() {
 					email: data.email,
 					firstName: data.first_name,
 					lastName: data.last_name,
-					password_hash: data.password_hash,
 				}),
 			});
 			if (!response.ok) {
@@ -83,8 +77,13 @@ export function EditProfile() {
 
 			const answer = await response.json();
 
-			if (answer.user) {
-				console.log('Användare', answer.user);
+			if (answer) {
+				console.log('svar vid uppdatering av användar information', answer);
+				setUser(answer.username);
+				setUserInfo.firstname(answer.firstname);
+				setUserInfo.lastname(answer.lastname);
+				setUserInfo.username(answer.username);
+				setUserInfo.email(answer.email);
 			}
 		} catch (error) {
 			console.error('Det gick inte att uppdatera användaruppgifter:', error);
@@ -191,33 +190,6 @@ export function EditProfile() {
 											style={{ minHeight: '1rem' }}
 										>
 											{form.formState.errors.email && (
-												<FormMessage className="text-[0.6rem]" />
-											)}
-										</div>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								className="grid grid-cols-4 items-center"
-								control={form.control}
-								name="password_hash"
-								render={({ field }) => (
-									<FormItem className="grid grid-cols-4 items-center gap-x-4 space-y-1 mb-4">
-										<FormLabel className="text-right">Lösenord</FormLabel>
-										<FormControl className="grid-cols-4">
-											<Input
-												className="col-span-3"
-												type="password_hash"
-												placeholder="••••••••"
-												{...field}
-											/>
-										</FormControl>
-										<div className="text-right"></div>
-										<div
-											className="col-span-3 m-0 text-xs c"
-											style={{ minHeight: '1.5rem' }}
-										>
-											{form.formState.errors.password_hash && (
 												<FormMessage className="text-[0.6rem]" />
 											)}
 										</div>

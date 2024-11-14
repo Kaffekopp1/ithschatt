@@ -8,6 +8,7 @@ export default function AuthProvider({ children }) {
 	const [token, setToken] = useState('empty');
 	const [userId, setUserId] = useState('');
 	const [loading, setLoading] = useState('true');
+	const [userInfo, setUserInfo] = useState({});
 
 	const value = {
 		user,
@@ -17,11 +18,19 @@ export default function AuthProvider({ children }) {
 		userId,
 		setUserId,
 		loading,
+		userInfo,
+		setUserInfo,
 	};
 	useEffect(() => {
 		const savedUser = localStorage.getItem('user');
 		const savedToken = localStorage.getItem('token');
 		const savedId = localStorage.getItem('id');
+		const savedUserInfo = localStorage.getItem('userinfo');
+
+		if (savedUserInfo) {
+			setUserInfo(savedUserInfo);
+		}
+
 		if (savedToken && savedUser) {
 			setUser(savedUser);
 			setToken(savedToken);

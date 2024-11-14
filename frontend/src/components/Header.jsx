@@ -17,14 +17,17 @@ function Header() {
 	const navigate = useNavigate();
 
 	return (
-		<header className="flex items-center justify-between p-4 border-b">
+		<header className="flex items-center justify-between p-4 border-b z-1">
 			<div className="flex-1 text-center">
 				<h1 className="text-xl font-semibold">ChatApp</h1>
 			</div>
 			<NavigationMenu>
 				<NavigationMenuList className="flex items-center space-x-4 w-200">
 					<NavigationMenuItem>
-						<NavigationMenuLink onClick={() => navigate('/testsida')}>
+						<NavigationMenuLink
+							onClick={() => navigate('/testsida')}
+							className="cursor-pointer"
+							>
 							TestSida
 						</NavigationMenuLink>
 						<NavigationMenuTrigger
@@ -37,13 +40,18 @@ function Header() {
 							{user ? user : 'Login'}
 						</NavigationMenuTrigger>
 						{user && (
-							<NavigationMenuLink href="/bildgalleri">
+							<NavigationMenuLink onClick={() => navigate('/bildgalleri')}>
 								bildgalleri
 							</NavigationMenuLink>
 						)}
 						<NavigationMenuContent>
 							{user && <EditProfile />}
-							<NavigationMenuLink href="/settings">Settings</NavigationMenuLink>
+							<NavigationMenuLink
+								onClick={() => navigate('/settings')}
+								className="cursor-pointer"
+							>
+								Settings
+							</NavigationMenuLink>
 							<NavigationMenuLink> {user && <Logout />}</NavigationMenuLink>
 						</NavigationMenuContent>
 					</NavigationMenuItem>
