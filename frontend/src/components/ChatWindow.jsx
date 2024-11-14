@@ -21,8 +21,8 @@ import {
 } from './ui/sidebar';
 import AuthContext from '../AuthContext';
 
-// const socket = io.connect('http://backend:4000');
-const socket = io.connect('/');
+const socket = io.connect('http://localhost:4000');
+// const socket = io.connect('/');
 
 export function ChatWindow() {
 	const { user, userId } = useContext(AuthContext);
@@ -35,6 +35,7 @@ export function ChatWindow() {
 	};
 
 	const [messages, setMessages] = useState([]);
+	const [oldMessages, setOldmessages] = useState([]);
 	const [message, setMessage] = useState('');
 
 	const handleSendMessage = () => {
@@ -63,6 +64,19 @@ export function ChatWindow() {
 		return () => {
 			socket.off('receive_message');
 		};
+	}, []);
+	useEffect(() => {
+		async function getMessages() {
+			try {
+				const response = await fetch('/api/messages');
+				const data = await response.json();
+				console.log('data', data);
+				setOldmessages(data);
+			} catch (error) {
+				console.log('error', error);
+			}
+		}
+		getMessages();
 	}, []);
 
 	return (
@@ -115,9 +129,40 @@ export function ChatWindow() {
 			<SidebarInset>
 				<div className="flex h-[calc(100vh-5rem)] flex-col">
 					<ScrollArea className="flex-1 p-4">
-						{messages.map((message) => (
+						{oldMessages?.messages &&
+							oldMessages.messages.map((message) => (
+								<div
+									key={`${message.id} + ${message.name} + ${message.user_id}`}
+									className={`mb-4 flex ${
+										message.sender === user ? 'justify-end' : 'justify-start'
+									}`}
+								>
+									<p>{message.id}</p>
+
+									<Avatar className="h-8 w-8">
+										{message.sender === 'mainUser' ? (
+											<AvatarImage src={mainUser.avatar} alt={mainUser.name} />
+										) : (
+											<AvatarImage
+												src="/placeholder.svg?height=32&width=32"
+												alt="Other User"
+											/>
+										)}
+										<AvatarFallback>
+											{message.sender === 'mainUser' ? 'L' : 'O'}
+										</AvatarFallback>
+									</Avatar>
+									<div className="flex flex-col">
+										<p className="text-sm font-semibold">{message.name}</p>
+										<p className="text-sm">{message.content}</p>
+									</div>
+								</div>
+							))}
+					</ScrollArea>
+					<ScrollArea className="flex-1 p-4">
+						{messages.map((message, index) => (
 							<div
-								key={message.id}
+								key={index}
 								className={`mb-4 flex ${
 									message.sender === user ? 'justify-end' : 'justify-start'
 								}`}

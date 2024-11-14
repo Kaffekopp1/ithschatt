@@ -16,7 +16,7 @@ app.use(express.json());
 // ändra till 5173 vid lokalt.
 const io = new Server(server, {
 	cors: {
-		origin: '*',
+		origin: 'http://localhost:5173',
 		methods: ['GET', 'POST'],
 	},
 });
@@ -24,7 +24,7 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
 	console.log(`A user connected: ${socket.id}`);
 	socket.on('send_message', async (data) => {
-		console.log('data', data);
+		let messageData = [];
 		try {
 			await client.query(
 				`INSERT INTO messages (sender_id, content )VALUES($1,$2)`,
@@ -34,6 +34,7 @@ io.on('connection', (socket) => {
 			console.log('error', error);
 			socket.broadcast.emit('receive_message', error);
 		}
+
 		socket.broadcast.emit('receive_message', data);
 	});
 
