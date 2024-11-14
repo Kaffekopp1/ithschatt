@@ -25,7 +25,7 @@ import AuthContext from '../AuthContext';
 const socket = io.connect('/');
 
 export function ChatWindow() {
-	const { user } = useContext(AuthContext);
+	const { user, userId } = useContext(AuthContext);
 
 	// this user
 	const mainUser = {
@@ -42,6 +42,7 @@ export function ChatWindow() {
 
 		const newUserMessage = {
 			id: messages.length + 1,
+			user_id: userId,
 			content: message,
 			sender: 'mainUser',
 			timestamp: new Date(),

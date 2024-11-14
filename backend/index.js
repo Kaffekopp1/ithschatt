@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const { Server } = require('socket.io');
 const http = require('http');
 dotenv.config();
-
+const client = require('./connectionDb.js');
 const app = express(),
 	port = 3000;
 
@@ -21,11 +21,19 @@ const io = new Server(server, {
 	},
 });
 
-console.log('docker peter');
 io.on('connection', (socket) => {
 	console.log(`A user connected: ${socket.id}`);
-	socket.on('send_message', (data) => {
+	socket.on('send_message', async (data) => {
 		console.log('data', data);
+		try {
+			await client.query(
+				`INSERT INTO messages (sender_id, content )VALUES($1,$2)`,
+				[data.user_id, data.content]
+			);
+		} catch (error) {
+			console.log('error', error);
+			socket.broadcast.emit('receive_message', error);
+		}
 		socket.broadcast.emit('receive_message', data);
 	});
 
