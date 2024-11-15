@@ -24,6 +24,7 @@ import { z } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,9 +40,9 @@ export default function SignupForm() {
     postalnr: z.string().max(5, 'Ogiltigt postnummer'),
     consent: z.boolean(),
   });
+  const [errorMessage, setErrorMessage] = useState({});
 
   const onSubmit = async (data) => {
-    console.log('data', data.username);
     if (!data.consent) {
       data.adress = '';
       data.postalnr = '';
@@ -63,9 +64,29 @@ export default function SignupForm() {
           consent: data.consent,
         }),
       });
+
+      if (!response.ok) {
+        const error = await response.json();
+        const errorMessage = error?.error || 'Ett okänt fel inträffade.';
+
+        if (errorMessage.includes('username')) {
+          setErrorMessage({
+            field: 'username',
+            message: 'Användarnamnet är redan registrerat.',
+          });
+        } else if (errorMessage.includes('email')) {
+          setErrorMessage({
+            field: 'email',
+            message: 'E-postadressen är redan registrerad.',
+          });
+        }
+        return;
+      }
+
       const answer = await response.json();
-      console.log(answer);
-      answer && navigate('/login');
+      if (answer) {
+        navigate('/login');
+      }
     } catch (error) {
       alert('något gick fel');
       console.error('Error vid api fråga:', error);
@@ -89,7 +110,7 @@ export default function SignupForm() {
   const passwordValue = form.watch('password');
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -214,6 +235,15 @@ export default function SignupForm() {
               </FormItem>
             )}
           />
+          {errorMessage.field === 'username' && (
+            <p className="error">{errorMessage.message}</p>
+          )}
+          {errorMessage.field === 'email' && (
+            <p className="error">{errorMessage.message}</p>
+          )}
+          {errorMessage.field === 'general' && (
+            <p className="error">{errorMessage.message}</p>
+          )}
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline">Personuppgiftspolicy</Button>

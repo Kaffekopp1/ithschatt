@@ -14,7 +14,7 @@ const WelcomePage = () => {
   const { user } = useContext(AuthContext);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen">
       <Card className="w-80">
         <CardHeader>
           <CardTitle className="text-center">ChatApp</CardTitle>

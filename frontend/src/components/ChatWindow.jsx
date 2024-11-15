@@ -128,7 +128,7 @@ export function ChatWindow() {
       </Sidebar>
       <SidebarInset>
         <div className="flex h-[calc(100vh-5rem)] flex-col">
-          <ScrollArea className="flex-1 p-4">
+          {/* <ScrollArea className="flex-1 p-4">
             {oldMessages?.messages &&
               oldMessages.messages.map((message) => (
                 <div
@@ -158,7 +158,7 @@ export function ChatWindow() {
                   </div>
                 </div>
               ))}
-          </ScrollArea>
+          </ScrollArea> */}
           <ScrollArea className="flex-1 p-4">
             {messages.map((message, index) => (
               <div
