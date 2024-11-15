@@ -40,7 +40,7 @@ const schema = z.object({
 });
 
 export function EditProfile() {
-	const { user, userId, userInfo, setUser, setUserInfo } =
+	const { user, userId, userInfo, setUser, setToken, setUserId, setUserInfo } =
 		useContext(AuthContext);
 
 	const form = useForm({
@@ -52,6 +52,36 @@ export function EditProfile() {
 			last_name: userInfo.lastname,
 		},
 	});
+
+	async function deleteUser() {
+		try {
+			const response = await fetch('/api/deleteuser', {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ userId: userId }),
+			});
+			const data = await response.json();
+			console.log('data', data);
+			if (!response.ok) {
+				alert('något gick på tok');
+			} else {
+				setUser('');
+				setToken('');
+				setUserId('');
+				setUserInfo('');
+				localStorage.removeItem('user');
+				localStorage.removeItem('token');
+				localStorage.removeItem('id');
+				localStorage.removeItem('userinfo');
+				alert('din användare är borttagen');
+			}
+		} catch (error) {
+			console.log('error', error);
+			alert('Något gick fel, din användare är INTE borttagen');
+		}
+	}
 
 	const updateProfile = async (data) => {
 		try {
@@ -201,6 +231,7 @@ export function EditProfile() {
 							</DialogFooter>
 						</form>
 					</Form>
+					<Button onClick={deleteUser}> DELETE USER</Button>
 				</DialogContent>
 			</Dialog>
 		)
