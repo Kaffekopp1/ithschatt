@@ -205,6 +205,7 @@ export default function SignupForm() {
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
+										className="mr-3"
                   />
                 </FormControl>
                 <FormLabel>
@@ -217,11 +218,9 @@ export default function SignupForm() {
           />
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline">Personuppgiftspolicy</Button>
+              <Button variant="outline" className="mr-3">Personuppgiftspolicy</Button>
             </DialogTrigger>
-            <DialogContent
-              className="
-    max-h-[80vh] overflow-y-auto">
+            <DialogContent className="max-h-[80vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Personuppgiftspolicy för ChattApp</DialogTitle>
                 <DialogDescription>
