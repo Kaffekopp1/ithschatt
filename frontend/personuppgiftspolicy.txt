@@ -1,5 +1,5 @@
 Personuppgiftspolicy för ChattApp
-Vi samlar in och behandlar personuppgifter om dig, inklusive förnamn, efternamn, e-postadress, adress och användarnamn. Syftet med denna behandling är följande:
+Vi samlar in och behandlar personuppgifter om dig, inklusive förnamn, efternamn, e-postadress, användarnamn (och adress och postnummer om det tillåts i registreringen). Syftet med denna behandling är följande:
 
 1. Skapa och administrera användarkonton
 Vi samlar in personuppgifter, såsom användarnamn, förnamn och efternamn, för att skapa och identifiera användarkonton i vår chatt-applikation. Detta är nödvändigt för att tillhandahålla en säker och funktionell tjänst.
