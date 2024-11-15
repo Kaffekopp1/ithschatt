@@ -79,7 +79,8 @@ export default function SignupForm() {
 	const passwordValue = form.watch('password');
 
 	return (
-		<div className="flex items-center justify-center min-h-screen bg-gray-100">
+		<div className="flex justify-center min-h-[100vh] bg-gray-100  ">
+			<div className="mt-0.75 py-[60px] overflow-y-scroll max-h-[90vh] no-scrollbar p-4">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 					<FormField
@@ -191,7 +192,7 @@ export default function SignupForm() {
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<Checkbox
+									<Checkbox className="mr-2"
 										checked={field.value}
 										onCheckedChange={field.onChange}
 									/>
@@ -208,6 +209,7 @@ export default function SignupForm() {
 					<Button type="submit">Submit</Button>
 				</form>
 			</Form>
+			</div>
 		</div>
 	);
 }

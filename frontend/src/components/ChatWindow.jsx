@@ -80,7 +80,7 @@ export function ChatWindow() {
 	}, []);
 
 	return (
-		<SidebarProvider>
+		<SidebarProvider className="overflow-hidden">
 			<Sidebar>
 				<SidebarHeader>
 					<SidebarGroup>

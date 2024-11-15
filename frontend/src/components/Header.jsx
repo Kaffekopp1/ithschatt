@@ -24,12 +24,12 @@ function Header() {
 			<NavigationMenu>
 				<NavigationMenuList className="flex items-center space-x-4 w-200">
 					<NavigationMenuItem>
-						<NavigationMenuLink
+						{/* <NavigationMenuLink
 							onClick={() => navigate('/testsida')}
 							className="cursor-pointer"
 							>
 							TestSida
-						</NavigationMenuLink>
+						</NavigationMenuLink> */}
 						<NavigationMenuTrigger
 							onClick={() => {
 								if (!user) {

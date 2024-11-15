@@ -18,6 +18,16 @@ body {
 	overflow: hidden;
 }
 
+/* Dölj scrollbars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* För Chrome, Safari och Edge */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* För Internet Explorer och Edge */
+  scrollbar-width: none;    /* För Firefox */
+}
+
 @layer base {
 	:root {
 		--background: 0 0% 100%;
